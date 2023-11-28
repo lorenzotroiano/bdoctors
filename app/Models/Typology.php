@@ -12,4 +12,9 @@ class Typology extends Model
         'name',
 
     ];
+
+    public function profiles()
+    {
+        return $this->belongsToMany(Profile::class);
+    }
 }

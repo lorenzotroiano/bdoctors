@@ -13,4 +13,9 @@ class Star extends Model
         'vote',
 
     ];
+
+    public function profiles()
+    {
+        return $this->belongsToMany(Profile::class);
+    }
 }

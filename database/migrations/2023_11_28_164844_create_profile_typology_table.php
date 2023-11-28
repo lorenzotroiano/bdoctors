@@ -13,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('sponsorships', function (Blueprint $table) {
+        Schema::create('profile_typology', function (Blueprint $table) {
             $table->id();
 
-            $table->string('name');
-            $table->decimal('price');
-            $table->time('duration');
+            $table->foreignId('profile_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('typology_id')->constrained()->cascadeOnDelete();
 
             $table->timestamps();
         });
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sponsorships');
+        Schema::dropIfExists('profile_typology');
     }
 };

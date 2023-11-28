@@ -14,6 +14,38 @@ class Profile extends Model
         'services',
         'address',
         'photo',
-        'visible'
+        'visible',
+
+        'user_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function typologies()
+    {
+        return $this->belongsToMany(Typology::class);
+    }
+
+    public function stars()
+    {
+        return $this->belongsToMany(Star::class);
+    }
+
+    public function sponsorships()
+    {
+        return $this->belongsToMany(Sponsorship::class);
+    }
 }

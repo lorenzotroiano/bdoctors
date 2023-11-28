@@ -14,4 +14,9 @@ class Sponsorship extends Model
         'price',
         'duration',
     ];
+
+    public function profiles()
+    {
+        return $this->belongsToMany(Profile::class);
+    }
 }
