@@ -14,4 +14,6 @@ class ProfileSponsorship extends Model
         "data_inizio",
         "data_fine"
     ];
+
+    protected $table = "profile_sponsorship";
 }

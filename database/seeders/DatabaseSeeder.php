@@ -20,9 +20,11 @@ class DatabaseSeeder extends Seeder
             ProfileTableSeeder::class,
             ReviewTableSeeder::class,
             StarTableSeeder::class,
+            TypologyTableSeeder::class,
             MessageTableSeeder::class,
             SponsorshipTableSeeder::class,
             ProfileSponsorshipTableSeeder::class,
+
         ]);
 
 

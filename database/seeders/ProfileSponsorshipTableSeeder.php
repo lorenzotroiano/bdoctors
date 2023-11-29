@@ -23,6 +23,7 @@ class ProfileSponsorshipTableSeeder extends Seeder
         $profile = Profile::all();
         $sponsorship = Sponsorship::all();
 
+
         ProfileSponsorship::create([
             "profile_id" => 1,
             "sponsorship_id" => 2,
