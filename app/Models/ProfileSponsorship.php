@@ -5,19 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Sponsorship extends Model
+class ProfileSponsorship extends Model
 {
     use HasFactory;
-
     protected $fillable = [
-        'name',
-        'price',
-        'duration',
-
+        "profile_id",
+        "sponsorship_id",
+        "data_inizio",
+        "data_fine"
     ];
-
-    public function profiles()
-    {
-        return $this->belongsToMany(Profile::class);
-    }
 }
