@@ -15,7 +15,9 @@ class Profile extends Model
         'address',
         'photo',
         'visible',
+    ];
 
+    protected $guarded = [
         'user_id'
     ];
 
