@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,4 +29,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [DoctorController::class, 'index'])->name('dashboard');
+
+    // Rotta per mostrare il form di creazione di un nuovo progetto
+    Route::get('/create', [DoctorController::class, 'create'])->name('create');
+
+    // Rotta per salvare un nuovo progetto nel database
+    Route::post('/store', [DoctorController::class, 'store'])->name('store');
+});
