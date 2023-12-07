@@ -13,7 +13,6 @@ class DoctorController extends Controller
     public function index()
     {
         $profiles = Profile::all();
-
         return view("dashboard", compact("profiles"));
     }
 
@@ -64,6 +63,13 @@ class DoctorController extends Controller
         return redirect()->route('dashboard', $newProfile->id);
     }
 
+        public function show(Profile $profile){
+        $user = Auth::user();
+        $typologies = Typology::all();
+        $profile = Profile::where('user_id', Auth::user()->id)->first();
+        return view('doctor.show', compact('profile', 'user', 'typologies'));
+    }
+
     // VALIDATION
     public function getValidations()
     {
@@ -79,10 +85,27 @@ class DoctorController extends Controller
     }
 
     public function edit(Profile $profile){
-        return view('doctor.edit', compact('profile'));
+        $user = Auth::user();
+        if($user->id === $profile->user_id){
+            $typologies = Typology::all();
+        } else {
+            abort(404);
+        }
+        return view('doctor.edit', compact('profile', 'typologies'));
     }
 
     public function update(Request $request, Profile $profile){
-        return redirect()->route('doctor.index');
+        $oldPhoto = $profile->photo;
+        $data = $request->all();
+
+        if ($request->hasFile('photo')) {
+            Storage::delete($profile->photo);
+            $data['photo'] =  Storage::put('uploads', $data['photo']);
+        } else {
+            $data['photo'] = $oldPhoto;
+        }
+        $profile->update($data);
+        $profile->typologies()->sync($data['typologies']);
+        return redirect()->route('dashboard');
     }
 }

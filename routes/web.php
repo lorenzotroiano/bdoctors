@@ -29,12 +29,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
 require __DIR__ . '/auth.php';
 
-
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', [DoctorController::class, 'index'])->name('dashboard');
+    Route::get('/doctor', [DoctorController::class, 'index'])->name('dashboard');
 });
 
 Route::prefix('doctor')->middleware('auth')->group(function () {
@@ -44,6 +42,7 @@ Route::prefix('doctor')->middleware('auth')->group(function () {
     // Rotta per salvare un nuovo progetto nel database
     Route::post('/store', [DoctorController::class, 'store'])->name('store');
     
-    Route::get('/edit', [DoctorController::class, 'edit'])->name('doctor.edit');
-    Route::patch('/update', [DoctorController::class, 'update'])->name('doctor.update');
+    Route::get('/show/{profile}', [DoctorController::class, 'show'])->name('doctor.show');
+    Route::get('/{profile}/edit', [DoctorController::class, 'edit'])->name('doctor.edit');
+    Route::patch('/update/{profile}', [DoctorController::class, 'update'])->name('doctor.update');
 });
