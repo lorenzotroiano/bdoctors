@@ -17,23 +17,21 @@ class TypologyTableSeeder extends Seeder
     public function run()
     {
         $typologyData = [
-            ['name' => 'Wifi'],
-            ['name' => 'Spotify'],
-            ['name' => 'Tv'],
-            ['name' => 'FrigoBar'],
-            ['name' => 'Idromassaggio'],
-            ['name' => 'Garage'],
-            ['name' => 'Animali'],
-            ['name' => 'Bevande'],
-            ['name' => 'Palestra'],
-            ['name' => 'Bar'],
-
+            ['name' => 'Cardiologia'],
+            ['name' => 'Dermatologia'],
+            ['name' => 'Endocrinologia'],
+            ['name' => 'Gastroenterologia'],
+            ['name' => 'Nefrologia'],
+            ['name' => 'Neurologia'],
+            ['name' => 'Oncologia'],
+            ['name' => 'Pediatria'],
+            ['name' => 'Reumatologia'],
+            ['name' => 'Chirurgia'],
         ];
 
         foreach ($typologyData as $data) {
             Typology::create($data);
-        }
-        ;
+        };
 
         $profiles = Profile::inRandomOrder()->limit(rand(1, 3))->get();
 
@@ -44,6 +42,5 @@ class TypologyTableSeeder extends Seeder
         foreach ($typologies as $typology) {
             $typology->profiles()->attach($profiles);
         }
-
     }
 }
