@@ -45,7 +45,7 @@ class DoctorController extends Controller
 
 
         $newProfile = new Profile();
-        $newProfile->user_id =  Auth::user()->id;
+        $newProfile->user_id = Auth::user()->id;
 
 
 
@@ -78,11 +78,23 @@ class DoctorController extends Controller
         ];
     }
 
-    public function edit(Profile $profile){
+    public function edit(Profile $profile)
+    {
         return view('doctor.edit', compact('profile'));
     }
 
-    public function update(Request $request, Profile $profile){
+    public function update(Request $request, Profile $profile)
+    {
         return redirect()->route('doctor.index');
+    }
+
+    public function destroy(Profile $profile)
+    {
+
+        $this->authorize('delete', $profile);
+
+        $profile->delete();
+
+        return redirect()->route('dashboard')->with('success', 'Profilo eliminato con successo');
     }
 }
