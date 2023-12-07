@@ -77,4 +77,12 @@ class DoctorController extends Controller
             'photo.*' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:10000',
         ];
     }
+
+    public function edit(Profile $profile){
+        return view('doctor.edit', compact('profile'));
+    }
+
+    public function update(Request $request, Profile $profile){
+        return redirect()->route('doctor.index');
+    }
 }

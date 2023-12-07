@@ -35,10 +35,15 @@ require __DIR__ . '/auth.php';
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DoctorController::class, 'index'])->name('dashboard');
+});
 
+Route::prefix('doctor')->middleware('auth')->group(function () {
     // Rotta per mostrare il form di creazione di un nuovo progetto
     Route::get('/create', [DoctorController::class, 'create'])->name('create');
-
+    
     // Rotta per salvare un nuovo progetto nel database
     Route::post('/store', [DoctorController::class, 'store'])->name('store');
+    
+    Route::get('/edit', [DoctorController::class, 'edit'])->name('doctor.edit');
+    Route::patch('/update', [DoctorController::class, 'update'])->name('doctor.update');
 });
