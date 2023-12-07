@@ -88,16 +88,17 @@ class DoctorController extends Controller
         $user = Auth::user();
         if($user->id === $profile->user_id){
             $typologies = Typology::all();
+            return view('doctor.edit', compact('profile', 'typologies'));
         } else {
             abort(404);
         }
-        return view('doctor.edit', compact('profile', 'typologies'));
     }
 
     public function update(Request $request, Profile $profile){
         $oldPhoto = $profile->photo;
-        $data = $request->all();
-
+        $data = $request->validate(
+            $this->getValidations(),
+        );
         if ($request->hasFile('photo')) {
             Storage::delete($profile->photo);
             $data['photo'] =  Storage::put('uploads', $data['photo']);
@@ -106,7 +107,7 @@ class DoctorController extends Controller
         }
         $profile->update($data);
         $profile->typologies()->sync($data['typologies']);
-        return redirect()->route('dashboard');
+        return redirect()->route('doctor.show', $profile);
     }
 
     public function destroy(Profile $profile)

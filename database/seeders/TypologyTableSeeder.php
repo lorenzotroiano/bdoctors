@@ -33,7 +33,7 @@ class TypologyTableSeeder extends Seeder
             Typology::create($data);
         };
 
-        $profiles = Profile::inRandomOrder()->limit(rand(1, 3))->get();
+        $profiles = Profile::inRandomOrder()->limit(rand(0, 3))->get();
 
         $typologyNames = array_column($typologyData, 'name');
 

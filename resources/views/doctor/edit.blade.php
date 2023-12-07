@@ -49,7 +49,12 @@
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="{{ $typology->id }}" name="typologies[]"
                     id="typology-{{ $typology->id }}" 
-                    @checked(in_array($typology->id, old('typologies',[])))>
+                    @if ($errors->any())
+                        @checked(in_array($typology->id, old('typologies',[])))
+                    @else
+                        @checked($profile->typologies->contains($typology->id))
+                    @endif
+                    >
                     <label class="form-check-label" for="typology-{{ $typology->id }}">
                         {{ $typology->name }}
                     </label>

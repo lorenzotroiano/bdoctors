@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('profile_typology', function (Blueprint $table) {
-            $table->id();
+            // $table->id();
 
             $table->foreignId('profile_id')->constrained()->cascadeOnDelete();
             $table->foreignId('typology_id')->constrained()->cascadeOnDelete();
