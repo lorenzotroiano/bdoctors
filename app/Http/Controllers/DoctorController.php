@@ -44,7 +44,7 @@ class DoctorController extends Controller
 
 
         $newProfile = new Profile();
-        $newProfile->user_id =  Auth::user()->id;
+        $newProfile->user_id = Auth::user()->id;
 
 
 
@@ -107,5 +107,15 @@ class DoctorController extends Controller
         $profile->update($data);
         $profile->typologies()->sync($data['typologies']);
         return redirect()->route('dashboard');
+    }
+
+    public function destroy(Profile $profile)
+    {
+
+        $this->authorize('delete', $profile);
+
+        $profile->delete();
+
+        return redirect()->route('dashboard')->with('success', 'Profilo eliminato con successo');
     }
 }
