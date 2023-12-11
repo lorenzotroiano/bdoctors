@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Profile;
+use App\Models\Star;
 use App\Models\Typology;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class DoctorController extends Controller
@@ -65,9 +67,17 @@ class DoctorController extends Controller
 
         public function show(Profile $profile){
         $user = Auth::user();
-        $typologies = Typology::all();
-        $profile = Profile::where('user_id', Auth::user()->id)->first();
-        return view('doctor.show', compact('profile', 'user', 'typologies'));
+        if ($user->id === $profile->user_id) {
+            $typologies = Typology::all();
+            // $stars = Star::whereHas('profiles', function ($query) use ($user) {
+            //     $query->where('profile_id', $user->profile->id);
+            // })->get();
+            $media = $this->mediaVoto();
+            $profile = Profile::where('user_id', $user->id)->first();
+            return view('doctor.show', compact('profile', 'user', 'typologies', 'media'));
+        } else {
+            abort(404);
+        }
     }
 
     // VALIDATION
@@ -118,5 +128,23 @@ class DoctorController extends Controller
         $profile->delete();
 
         return redirect()->route('dashboard')->with('success', 'Profilo eliminato con successo');
+    }
+
+    public function mediaVoto(){
+        $user = Auth::user();
+
+        $stars = Star::whereHas('profiles', function ($query) use ($user) {
+            $query->where('profile_id', $user->profile->id);
+        })->get();
+        $sum = 0;
+        $count = count($stars);
+        $media = 0;
+        foreach ($stars as $star) {
+            $sum += $star->vote;
+            if ($count > 0) {
+                $media = $sum / $count;
+            }
+        }
+        return $media;
     }
 }
