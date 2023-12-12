@@ -16,9 +16,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -46,5 +45,4 @@ Route::prefix('doctor')->middleware('auth')->group(function () {
     Route::get('/{profile}/edit', [DoctorController::class, 'edit'])->name('doctor.edit');
     Route::patch('/update/{profile}', [DoctorController::class, 'update'])->name('doctor.update');
     Route::delete('/destroy', [DoctorController::class, 'destroy'])->name('doctor.destroy');
-
 });
