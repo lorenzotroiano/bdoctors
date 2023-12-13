@@ -32,7 +32,7 @@ class DoctorController extends Controller
         $typologies = Typology::all();
 
         // Carica la vista 'create' e passa i tipi e le tecnologie alla vista
-        return view('create', compact("typologies"));
+        return view('doctor.create', compact("typologies"));
     }
 
     // Salva un nuovo profile nel database
@@ -65,7 +65,8 @@ class DoctorController extends Controller
         return redirect()->route('dashboard', $newProfile->id);
     }
 
-        public function show(Profile $profile){
+    public function show(Profile $profile)
+    {
         $user = Auth::user();
         if ($user->id === $profile->user_id) {
             $typologies = Typology::all();
@@ -94,9 +95,10 @@ class DoctorController extends Controller
         ];
     }
 
-    public function edit(Profile $profile){
+    public function edit(Profile $profile)
+    {
         $user = Auth::user();
-        if($user->id === $profile->user_id){
+        if ($user->id === $profile->user_id) {
             $typologies = Typology::all();
             return view('doctor.edit', compact('profile', 'typologies'));
         } else {
@@ -104,7 +106,8 @@ class DoctorController extends Controller
         }
     }
 
-    public function update(Request $request, Profile $profile){
+    public function update(Request $request, Profile $profile)
+    {
         $oldPhoto = $profile->photo;
         $data = $request->validate(
             $this->getValidations(),
@@ -130,7 +133,8 @@ class DoctorController extends Controller
         return redirect()->route('dashboard')->with('success', 'Profilo eliminato con successo');
     }
 
-    public function mediaVoto(){
+    public function mediaVoto()
+    {
         $user = Auth::user();
 
         $stars = Star::whereHas('profiles', function ($query) use ($user) {
